@@ -1,0 +1,29 @@
+{
+  "name": "webgl-demo",
+  "version": "0.0.1",
+  "description": "",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack server --mode=development",
+    "build": "webpack --mode=production"
+  },
+  "author": "zhuang",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^18.0.0",
+    "@types/webpack": "^5.28.0",
+    "clean-webpack-plugin": "^4.0.0",
+    "html-webpack-plugin": "^5.5.0",
+    "raw-loader": "^4.0.2",
+    "ts-loader": "^9.3.1",
+    "ts-node": "^10.8.2",
+    "typescript": "^4.7.4",
+    "webpack": "^5.73.0",
+    "webpack-cli": "^4.10.0",
+    "webpack-dev-server": "^4.9.3"
+  },
+  "dependencies": {
+    "gl-matrix": "^3.4.3"
+  }
+}

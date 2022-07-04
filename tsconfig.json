@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "lib": ["esnext", "dom"],
+    "module": "commonjs",
+    "noImplicitAny": false,
+    "removeComments": true,
+    "preserveConstEnums": false,
+    "listEmittedFiles": true,
+    "noUnusedLocals": false,
+    "target": "esnext",
+    "watch": true,
+    // "allowJs": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "rootDirs": [
+      "src"
+    ],
+    "paths": {
+      "/@/*": ["src/*"],
+    }
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}
