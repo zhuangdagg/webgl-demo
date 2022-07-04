@@ -1,8 +1,9 @@
-const path = require('path')
-const htmlWebpackPlugin = require('html-webpack-plugin')
-const CleanWebpackPlugin = require('clean-webpack-plugin')
+import path from 'path'
+import HtmlWebpackPlugin from 'html-webpack-plugin'
+import { CleanWebpackPlugin } from 'clean-webpack-plugin'
+import Server from 'webpack-dev-server'
 
-module.exports = {
+export default <Server.WebpackConfiguration> {
   mode: 'production',
   entry: './src/main.ts',
   output: {
@@ -14,7 +15,7 @@ module.exports = {
     port: 7001,
     open: true,
     // 开始监听端口
-    onListening: function(devServer) {
+    onListening: function(devServer: any) {
       if(!devServer) {
         throw new Error('webpack-dev-server is not defined!')
       }
@@ -36,7 +37,7 @@ module.exports = {
     // 每次构建清空dist
     new CleanWebpackPlugin(),
     
-    new htmlWebpackPlugin({
+    new HtmlWebpackPlugin({
       template: 'public/index.html',
       filename: 'index.html'
     }),

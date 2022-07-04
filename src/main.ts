@@ -10,7 +10,7 @@ main()
 function main() {
 const canvas: any = document.getElementById('glCanvas')
 
-const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl')
+const gl = canvas.getContext('webgl2') || canvas.getContext('experimental-webgl')
 
 if (!gl) {
   alert('Unable to initialize WebGL. Your browser or machine may not support it.');
