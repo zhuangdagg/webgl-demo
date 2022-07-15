@@ -226,7 +226,7 @@ function drawScene(gl, programInfo, buffers) {
     const vertexCount = Y_SEGMENTS * X_SEGMENTS * 6;
     const type = gl.UNSIGNED_SHORT;
     const offset = 0;
-    gl.drawElements(gl.TRIANGLES, vertexCount, type, offset);
+    gl.drawElements(gl.LINE_LOOP, vertexCount, type, offset); // gl.LINE_LOOP 线框模式   gl.TRANGLES 三角形图元
   }
 }
 
