@@ -8,7 +8,7 @@ export default <Server.WebpackConfiguration> {
   entry: './src/main.ts',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'main-[hash:18].js'
+    filename: 'main.js'
   },
   name: 'webgl-demo',
   devServer: {
@@ -39,7 +39,9 @@ export default <Server.WebpackConfiguration> {
     
     new HtmlWebpackPlugin({
       template: 'public/index.html',
-      filename: 'index.html'
+      filename: 'index.html',
+      favicon: './public/npm.png',
+
     }),
   ]
 }
