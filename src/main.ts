@@ -31,6 +31,8 @@ function main() {
 
   const shaderProgram = initShaderProgram(gl, vsSource, fsSource);
 
+  gl.viewport(100, 100, 400, 400);  // 设置视口
+
   const programInfo: ProgramInfo = {
     program: shaderProgram,
     attribLocations: {
