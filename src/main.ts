@@ -1,37 +1,36 @@
 import vsSource from '/@/shaders/vertex.glsl';
 import fsSource from '/@/shaders/fragment.glsl';
 
-import { getWebGLContext, initShaderProgram } from '/@/utils'
+import { getWebGLContext, initShaderProgram } from '/@/utils';
 // import { mat4 } from 'gl-matrix';
 
 var cubeRotation = 0.0;
- //将球横纵划分成50X50的网格
+//将球横纵划分成50X50的网格
 const Y_SEGMENTS = 50;
 const X_SEGMENTS = 50;
 
 interface ProgramInfo {
-  program: WebGLProgram,
+  program: WebGLProgram;
   attribLocations: {
-    vertexPosition: number,
-    vertexColor: number,
-  }
+    vertexPosition: number;
+    vertexColor: number;
+  };
 }
 
 interface Buffers {
-  position: WebGLBuffer,
-  indices: WebGLBuffer,
-  color: WebGLBuffer,
+  position: WebGLBuffer;
+  indices: WebGLBuffer;
+  color: WebGLBuffer;
 }
 
 main();
 
 function main() {
-
-  const gl = getWebGLContext('glCanvas')
+  const gl = getWebGLContext('glCanvas');
 
   const shaderProgram = initShaderProgram(gl, vsSource, fsSource);
 
-  gl.viewport(100, 100, 400, 400);  // 设置视口
+  gl.viewport(100, 100, 400, 400); // 设置视口
 
   const programInfo: ProgramInfo = {
     program: shaderProgram,
@@ -64,10 +63,9 @@ function main() {
 /**
  * 初始化缓冲区
  * @param gl
- * @returns 
+ * @returns
  */
 function initBuffers(gl: WebGL2RenderingContext): Buffers {
-
   // 创建顶点缓冲区
   const positionBuffer = gl.createBuffer();
 
@@ -77,11 +75,11 @@ function initBuffers(gl: WebGL2RenderingContext): Buffers {
   // 获取顶点数据
   const positions = getPositionData();
 
+  console.log({ positions });
   // Now pass the list of positions into WebGL to build the
   // shape. We do this by creating a Float32Array from the
   // JavaScript array, then use it to fill the current buffer.
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
-
 
   // colors
 
@@ -102,14 +100,12 @@ function initBuffers(gl: WebGL2RenderingContext): Buffers {
   gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colors), gl.STATIC_DRAW);
 
-
-
   // 索引缓冲区
-  const indices = getIndicesData()
+  const indices = getIndicesData();
   const indexBuffer = gl.createBuffer();
 
   // 指定缓冲区类型
-  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer); 
+  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
 
   gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(indices), gl.STATIC_DRAW);
 
@@ -194,7 +190,6 @@ function drawScene(gl: WebGL2RenderingContext, programInfo: ProgramInfo, buffers
   }
 }
 
-
 /**
  * 获取顶点数据
  */
@@ -218,7 +213,7 @@ function getPositionData() {
     }
   }
 
-  return positions
+  return positions;
 }
 
 /**
@@ -239,5 +234,5 @@ function getIndicesData() {
     }
   }
 
-  return indices
+  return indices;
 }
