@@ -2,7 +2,14 @@ import vsSource from '/@/shaders/vertex.glsl';
 import fsSource from '/@/shaders/fragment.glsl';
 
 import { getWebGLContext, initShaderProgram } from '/@/utils';
-// import { mat4 } from 'gl-matrix';
+import { mat4 } from 'gl-matrix';
+
+let scaleMatrix = mat4.create()
+let rotateMatrix = mat4.create()
+let scaleSize = 1
+let radians = 0
+let change = -0.01
+
 
 var cubeRotation = 0.0;
 //将球横纵划分成50X50的网格
@@ -15,6 +22,7 @@ interface ProgramInfo {
     vertexPosition: number;
     vertexColor: number;
   };
+  uniformLocations: any;
 }
 
 interface Buffers {
@@ -35,29 +43,38 @@ function main() {
   const programInfo: ProgramInfo = {
     program: shaderProgram,
     attribLocations: {
+
       vertexPosition: gl.getAttribLocation(shaderProgram, 'aVertexPosition'),
       vertexColor: gl.getAttribLocation(shaderProgram, 'aVertexColor'),
     },
-    // uniformLocations: {
-    //   projectionMatrix: gl.getUniformLocation(shaderProgram, 'uProjectionMatrix'),
-    //   modelViewMatrix: gl.getUniformLocation(shaderProgram, 'uModelViewMatrix'),
-    // }
+    uniformLocations: {
+      rotateMatrix: gl.getUniformLocation(shaderProgram, 'uRotateMatrix4'),
+      scaleMatrix: gl.getUniformLocation(shaderProgram, 'uScaleMatrix4'),
+      // modelViewMatrix: gl.getUniformLocation(shaderProgram, 'uModelViewMatrix'),
+    }
   };
 
   const buffers = initBuffers(gl);
 
-  drawScene(gl, programInfo, buffers);
+  // drawScene(gl, programInfo, buffers);
   // Draw the scene repeatedly
-  // function render(now) {
-  //   now *= 0.001;  // convert to seconds
-  //   const deltaTime = now - then;
-  //   then = now;
 
-  //   drawScene(gl, programInfo, buffers, deltaTime);
+  function render() {
+  
+    if(scaleSize > 1) change = -0.01
+    else if ( scaleSize < 0.45) change = 0.01
+    scaleMatrix = mat4.create()
+    scaleSize += change
 
-  //   requestAnimationFrame(render);
-  // }
-  // requestAnimationFrame(render);
+    radians += Math.PI /180
+
+    mat4.rotateY(scaleMatrix, scaleMatrix, radians)
+    mat4.scale(scaleMatrix, scaleMatrix, [scaleSize, scaleSize, scaleSize])
+    drawScene(gl, programInfo, buffers);
+    
+    requestAnimationFrame(render);
+  }
+  requestAnimationFrame(render);
 }
 
 /**
@@ -180,6 +197,24 @@ function drawScene(gl: WebGL2RenderingContext, programInfo: ProgramInfo, buffers
   // Tell WebGL to use our program when drawing
 
   gl.useProgram(programInfo.program);
+
+  // const fieldOfView = 45 * Math.PI / 180;   // in radians
+  // const aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
+  // const zNear = 0.1;
+  // const zFar = 100.0;
+  // const projectionMatrix = mat4.create();
+
+  // // note: glmatrix.js always has the first argument
+  // // as the destination to receive the result.
+  // mat4.perspective(projectionMatrix,
+  //                  fieldOfView,
+  //                  aspect,
+  //                  zNear,
+  //                  zFar);
+  
+  gl.uniformMatrix4fv(programInfo.uniformLocations.rotateMatrix, false, rotateMatrix);
+
+  gl.uniformMatrix4fv(programInfo.uniformLocations.scaleMatrix, false, scaleMatrix)
 
   // Set the shader uniforms
   {
