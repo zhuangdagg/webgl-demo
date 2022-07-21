@@ -4,12 +4,11 @@ import fsSource from '/@/shaders/fragment.glsl';
 import { getWebGLContext, initShaderProgram } from '/@/utils';
 import { mat4 } from 'gl-matrix';
 
-let scaleMatrix = mat4.create()
-let rotateMatrix = mat4.create()
-let scaleSize = 1
-let radians = 0
-let change = -0.01
-
+let scaleMatrix = mat4.create();
+let rotateMatrix = mat4.create();
+let scaleSize = 1;
+let radians = 0;
+let change = -0.01;
 
 var cubeRotation = 0.0;
 //将球横纵划分成50X50的网格
@@ -43,7 +42,6 @@ function main() {
   const programInfo: ProgramInfo = {
     program: shaderProgram,
     attribLocations: {
-
       vertexPosition: gl.getAttribLocation(shaderProgram, 'aVertexPosition'),
       vertexColor: gl.getAttribLocation(shaderProgram, 'aVertexColor'),
     },
@@ -51,7 +49,7 @@ function main() {
       rotateMatrix: gl.getUniformLocation(shaderProgram, 'uRotateMatrix4'),
       scaleMatrix: gl.getUniformLocation(shaderProgram, 'uScaleMatrix4'),
       // modelViewMatrix: gl.getUniformLocation(shaderProgram, 'uModelViewMatrix'),
-    }
+    },
   };
 
   const buffers = initBuffers(gl);
@@ -60,18 +58,17 @@ function main() {
   // Draw the scene repeatedly
 
   function render() {
-  
-    if(scaleSize > 1) change = -0.01
-    else if ( scaleSize < 0.45) change = 0.01
-    scaleMatrix = mat4.create()
-    scaleSize += change
+    if (scaleSize > 1) change = -0.01;
+    else if (scaleSize < 0.45) change = 0.01;
+    scaleMatrix = mat4.create();
+    scaleSize += change;
 
-    radians += Math.PI /180
+    radians += Math.PI / 180;
 
-    mat4.rotateY(scaleMatrix, scaleMatrix, radians)
-    mat4.scale(scaleMatrix, scaleMatrix, [scaleSize, scaleSize, scaleSize])
+    mat4.rotateY(scaleMatrix, scaleMatrix, radians);
+    mat4.scale(scaleMatrix, scaleMatrix, [scaleSize, scaleSize, scaleSize]);
     drawScene(gl, programInfo, buffers);
-    
+
     requestAnimationFrame(render);
   }
   requestAnimationFrame(render);
@@ -211,10 +208,10 @@ function drawScene(gl: WebGL2RenderingContext, programInfo: ProgramInfo, buffers
   //                  aspect,
   //                  zNear,
   //                  zFar);
-  
+
   gl.uniformMatrix4fv(programInfo.uniformLocations.rotateMatrix, false, rotateMatrix);
 
-  gl.uniformMatrix4fv(programInfo.uniformLocations.scaleMatrix, false, scaleMatrix)
+  gl.uniformMatrix4fv(programInfo.uniformLocations.scaleMatrix, false, scaleMatrix);
 
   // Set the shader uniforms
   {
